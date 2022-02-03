@@ -11,7 +11,7 @@ SNAKE_HEAD_COLOR = (255, 0, 0)
 FOOD_COLOR = (255, 255, 255)
 PARTS_AFTER_FOOD = 3
 INITIAL_LENGTH = 4
-FPS = 16
+FPS = 12
 SCALE = 16
 
 
@@ -62,6 +62,7 @@ def add_vectors(vec1, vec2):
 # Window initialisation.
 pygame.init()
 pygame.font.init()
+pygame.mouse.set_visible(False)
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 width = screen.get_width()
 height = screen.get_height()
