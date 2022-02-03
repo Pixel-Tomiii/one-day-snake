@@ -24,10 +24,6 @@ class Direction(enum.IntEnum):
     DOWN = 3
     LEFT = 4
 
-    def reversed(direction1, direction2):
-        """Return whether the directions are opposite to each other."""
-        return min(direction1, direction2) + 2 == max(direction1, direction2)
-
     def vector(direction):
         """Returns a vector based on the direction. If the direction does
         not exist, the method returns None."""
@@ -115,26 +111,13 @@ while running:
                 next_frame = time.time()
             # Movement,
             elif event.key == pygame.K_w:
-                if len(direction) > 0 and not Direction.reversed(Direction.UP, direction[-1]):
-                    direction.append(Direction.UP)
-                elif not Direction.reversed(last_direction, Direction.UP):
-                    direction.append(Direction.UP)
-                    
+                direction.append(Direction.UP)
             elif event.key == pygame.K_a:
-                if len(direction) > 0 and not Direction.reversed(Direction.LEFT, direction[-1]):
-                    direction.append(Direction.LEFT)
-                elif not Direction.reversed(last_direction, Direction.LEFT):
-                    direction.append(Direction.LEFT)
+                direction.append(Direction.LEFT)
             elif event.key == pygame.K_s:
-                if len(direction) > 0 and not Direction.reversed(Direction.DOWN, direction[-1]):
-                    direction.append(Direction.DOWN)
-                elif not Direction.reversed(last_direction, Direction.DOWN):
-                    direction.append(Direction.DOWN)
+                direction.append(Direction.DOWN)
             elif event.key == pygame.K_d:
-                if len(direction) > 0 and not Direction.reversed(Direction.RIGHT, direction[-1]):
-                    direction.append(Direction.RIGHT)
-                elif not Direction.reversed(last_direction, Direction.RIGHT):
-                    direction.append(Direction.RIGHT)
+                direction.append(Direction.RIGHT)
 
         # Key released event.
         elif event.type == pygame.KEYUP:
@@ -142,33 +125,21 @@ while running:
             # Also tracks last key released when no more keys are
             # pressed.
             if event.key == pygame.K_w:
-                try:
-                    direction.remove(Direction.UP)
-                    if len(direction) == 0 and not Direction.reversed(Direction.UP, last_direction):
-                        last_direction = Direction.UP
-                except:
-                    pass
+                direction.remove(Direction.UP)
+                if len(direction) == 0:
+                    last_direction = Direction.UP
             elif event.key == pygame.K_a:
-                try:
-                    direction.remove(Direction.LEFT)
-                    if len(direction) == 0 and not Direction.reversed(Direction.LEFT, last_direction):
-                        last_direction = Direction.LEFT
-                except:
-                    pass
+                direction.remove(Direction.LEFT)
+                if len(direction) == 0:
+                    last_direction = Direction.LEFT
             elif event.key == pygame.K_s:
-                try:
-                    direction.remove(Direction.DOWN)
-                    if len(direction) == 0 and not Direction.reversed(Direction.DOWN, last_direction):
-                        last_direction = Direction.DOWN
-                except:
-                    pass
+                direction.remove(Direction.DOWN)
+                if len(direction) == 0:
+                    last_direction = Direction.DOWN
             elif event.key == pygame.K_d:
-                try:
-                    direction.remove(Direction.RIGHT)
-                    if len(direction) == 0 and not Direction.reversed(Direction.RIGHT, last_direction):
-                        last_direction = Direction.RIGHT
-                except:
-                    pass
+                direction.remove(Direction.RIGHT)
+                if len(direction) == 0:
+                    last_direction = Direction.RIGHT
             
     # Skip rendering if paused.
     if paused:
