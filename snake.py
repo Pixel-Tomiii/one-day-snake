@@ -115,13 +115,26 @@ while running:
                 next_frame = time.time()
             # Movement,
             elif event.key == pygame.K_w:
-                direction.append(Direction.UP)
+                if len(direction) > 0 and not Direction.reversed(Direction.UP, direction[-1]):
+                    direction.append(Direction.UP)
+                elif not Direction.reversed(last_direction, Direction.UP):
+                    direction.append(Direction.UP)
+                    
             elif event.key == pygame.K_a:
-                direction.append(Direction.LEFT)
+                if len(direction) > 0 and not Direction.reversed(Direction.LEFT, direction[-1]):
+                    direction.append(Direction.LEFT)
+                elif not Direction.reversed(last_direction, Direction.LEFT):
+                    direction.append(Direction.LEFT)
             elif event.key == pygame.K_s:
-                direction.append(Direction.DOWN)
+                if len(direction) > 0 and not Direction.reversed(Direction.DOWN, direction[-1]):
+                    direction.append(Direction.DOWN)
+                elif not Direction.reversed(last_direction, Direction.DOWN):
+                    direction.append(Direction.DOWN)
             elif event.key == pygame.K_d:
-                direction.append(Direction.RIGHT)
+                if len(direction) > 0 and not Direction.reversed(Direction.RIGHT, direction[-1]):
+                    direction.append(Direction.RIGHT)
+                elif not Direction.reversed(last_direction, Direction.RIGHT):
+                    direction.append(Direction.RIGHT)
 
         # Key released event.
         elif event.type == pygame.KEYUP:
@@ -129,21 +142,33 @@ while running:
             # Also tracks last key released when no more keys are
             # pressed.
             if event.key == pygame.K_w:
-                direction.remove(Direction.UP)
-                if len(direction) == 0:
-                    last_direction = Direction.UP
+                try:
+                    direction.remove(Direction.UP)
+                    if len(direction) == 0 and not Direction.reversed(Direction.UP, last_direction):
+                        last_direction = Direction.UP
+                except:
+                    pass
             elif event.key == pygame.K_a:
-                direction.remove(Direction.LEFT)
-                if len(direction) == 0:
-                    last_direction = Direction.LEFT
+                try:
+                    direction.remove(Direction.LEFT)
+                    if len(direction) == 0 and not Direction.reversed(Direction.LEFT, last_direction):
+                        last_direction = Direction.LEFT
+                except:
+                    pass
             elif event.key == pygame.K_s:
-                direction.remove(Direction.DOWN)
-                if len(direction) == 0:
-                    last_direction = Direction.DOWN
+                try:
+                    direction.remove(Direction.DOWN)
+                    if len(direction) == 0 and not Direction.reversed(Direction.DOWN, last_direction):
+                        last_direction = Direction.DOWN
+                except:
+                    pass
             elif event.key == pygame.K_d:
-                direction.remove(Direction.RIGHT)
-                if len(direction) == 0:
-                    last_direction = Direction.RIGHT
+                try:
+                    direction.remove(Direction.RIGHT)
+                    if len(direction) == 0 and not Direction.reversed(Direction.RIGHT, last_direction):
+                        last_direction = Direction.RIGHT
+                except:
+                    pass
             
     # Skip rendering if paused.
     if paused:
