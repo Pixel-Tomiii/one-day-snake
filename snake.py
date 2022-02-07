@@ -12,7 +12,7 @@ FOOD_COLOR = (255, 255, 255)
 PARTS_AFTER_FOOD = 3
 INITIAL_LENGTH = 4
 FPS = 12
-SCALE = 16
+SCALE = 32
 
 
 class Direction(enum.IntEnum):
@@ -44,12 +44,6 @@ def scale_world(world):
     return pygame.transform.scale(world, (world.get_width() * SCALE, world.get_height() * SCALE))
 
 
-def get_next_food_time(food_range):
-    """Returns a number between the lowest value of food range and the
-    highest value of food range + 1"""
-    return random.choice(food_range) + random.random()
-
-
 def add_vectors(vec1, vec2):
     """Adds two vectors together"""
     return (vec1[0] + vec2[0], vec1[1] + vec2[1])
@@ -77,8 +71,7 @@ direction = []
 last_direction = Direction.UP
 
 food = set()
-next_food = time.time()
-next_food_range = range(1, 5)
+
 
 # Render information.
 next_frame = time.time()
@@ -149,9 +142,8 @@ while running:
     current = time.time()
 
     # Spawn food.
-    if current >= next_food:
+    if len(food) == 0:
         food.add((random.randint(0, world_width), random.randint(0, world_height)))
-        next_food += get_next_food_time(next_food_range)
 
     # Render frame.
     if current < next_frame:
